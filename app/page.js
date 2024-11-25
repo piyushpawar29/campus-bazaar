@@ -1,101 +1,69 @@
-import Image from "next/image";
-
-export default function Home() {
+"use client";
+import './globals.css';
+import React from 'react';
+import Layout from './components/layout'; // Make sure the import is correct
+function MyApp({ Component, pageProps }) {
+  const handleCategoryClick = (category) => {
+    window.location.href = `/pages/${category}`; // Replace with your actual route
+  };
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Layout>
+      <div className="bg-black pt-10">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="flex flex-row items-center justify-center bg-black">
+          <div className="w-1/2 p-4 text-white bg-black">
+            <h2 className="text-2xl text-white font-bold px-7">
+              Our Best Selling Product
+              <br></br>Presenting: <br></br>
+              Smart Calculator</h2>
+            <p className="mt-2 px-7">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quidem.</p>
+            <button className="bg-white text-black px-9 py-3 rounded-md mt-4 ml-7 hover:bg-amber-500 hover:text-white hover:shadow-md hover:shadow-amber-500 transition ease-in-out duration-200" onClick={() => window.location.href = '/product/[id]'}><b>Buy Now</b></button>
+          </div>
+          <div className="w-1/2 ">
+            <img src="calculator.jpg.avif" alt="Product" className="w-full h-full object-cover" />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        
+        <div className="flex flex-col bg-yellow-500">
+        <div className="container m-auto min-w-min">
+          <h1 className="text-6xl font-bold text-center  text-white py-10 bg-yellow-500 ">BROWSE CATEGORIES</h1>
+        </div>
+        <section className="grid grid-cols-4 gap-4 py-20 pt-0 bg-amber-500 px-20">
+          {["Electronics", "Fashion", "Home", "Beauty", "Sports", "Toys", "Furniture", "Gaming"].map((category, index) => (
+            <div key={index} className="bg-white shadow md:hover:scale-105 border-amber-500 transition ease-in-out duration-200 hover:shadow-md hover:shadow-amber-500 p-1 align-center text-center aspect-video flex items-center justify-center rounded-md">
+              <h3 className="text-lg font-bold" onClick={() => handleCategoryClick(category)}>{category}</h3>
+            </div>
+          ))}
+        </section>
+        </div>
+
+          <div className="flex flex-col bg-white">
+        <div className="container m-auto min-w-min">
+          <h1 className="text-6xl font-bold text-center text-black py-10 bg-white ">POPULAR PRODUCTS</h1>
+        </div>
+        <section className="grid grid-cols-3 gap-4 pt-0 py-20 bg-white px-20">
+          {[
+            { name: "Apple Watch", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Sony Headphones", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Nike Shoes", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Samsung TV", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Canon Camera", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Apple AirPods", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Dell Laptop", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Samsung Refrigerator", price: "₹999.99", src: "calculator.jpg.avif" },
+            { name: "Apple Macbook", price: "₹999.99", src: "calculator.jpg.avif" },
+          ].map((product, index) => (
+            <div key={index} className="flex flex-col items-center justify-center bg-white shadow-md border p-4 rounded-md">
+              <img src={product.src} alt={product.name} className="w-full h-44 object-cover rounded-t-md" />
+              <h3 className="text-lg font-bold">{product.name}</h3>
+              <p className="text-lg">{product.price}</p>
+              <button className="bg-black text-white font-bold py-2 px-4 rounded-md transition ease-in-out duration-200 hover:shadow-md hover:shadow-amber-500 hover:bg-yellow-50 hover:text-black hover:scale-105">View Product</button>
+            </div>
+          ))}
+        </section>
+        </div>
+      </div>
+    </Layout>
   );
 }
+export default MyApp;
