@@ -41,9 +41,9 @@ export default function Signup() {
 //style={{ backgroundImage: 'url("/name.svg")',  }}
   return (
     <div className="flex justify-center items-center flex-col h-screen bg-amber-100">
-      <img src="logo.svg" className="flex justify-center items-center mb-5" />
-      <img src="name.png" className="flex justify-center items-center mb-5" />
-      <div className="h-[500px] w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center mt-0 mb-7 ">
+      <img src="logo.svg" className=" h-[130px] flex justify-center items-center " />
+      <img src="name.png" className="h-[50px] flex justify-center items-center mb-3" />
+      <div className="h-[450px] w-full max-w-md bg-white rounded-2xl shadow-lg p-7 text-center mt-0 m-5 ">
         
         <h3 className="text-2xl font-sans font-bold mb-5">Create Your Account</h3>
         {message && <p className={`mb-4 ${message.includes('successful') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
@@ -86,7 +86,7 @@ export default function Signup() {
           />
           <button 
             type="submit" 
-            className="w-full px-3 py-2 mt-4 bg-amber-500 hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500 transition ease-in-out duration-200 hover:scale-105 hover:shadow-md hover:shadow-amber-500 text-white font-bold rounded-3xl"
+            className="w-full px-3 py-2 mt-4 bg-gradient-to-r from-amber-300 to-orange-600 hover:from-white  hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500 transition ease-in-out duration-400 hover:scale-105 hover:shadow-sm hover:shadow-amber-500 text-white font-bold rounded-3xl"
           
           >
             Register

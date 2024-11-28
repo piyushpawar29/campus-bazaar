@@ -5,7 +5,7 @@ import React from "react";
 export default function Layout({ children }) {
     return (
       <div className="flex flex-col min-h-screen">
-        <header className="h-20 bg-gray-800">
+        <header className="h-14 bg-gray-800">
           <Header />
         </header>
         <main className="flex-1">
