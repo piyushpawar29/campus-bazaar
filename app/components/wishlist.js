@@ -1,10 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     axios.get("/api/user/wishlist")
@@ -47,7 +49,7 @@ export default function Wishlist() {
   //   },
   // ];
 
-  if (loading) return <p className="text-center font-semibold mt-6">Loading...</p>;
+  if (loading) return <p className="text-center text-2xl font-semibold mt-6">Loading...</p>;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 m-5">
@@ -56,7 +58,7 @@ export default function Wishlist() {
         <div 
           key={item.id} 
           className="border p-4 rounded shadow-sm cursor-pointer" 
-          onClick={() => window.location.href = `/product/${item.id}`}
+          onClick={() => router.push(`/product/${item.id}`)}
         >
           <h2 className="text-xl font-bold mb-2">{item.name}</h2>
           <img src={item.images[0]} alt={item.name} className="w-full h-48 object-cover mb-2" />
@@ -64,7 +66,8 @@ export default function Wishlist() {
           <p className="font-semibold">Price: ${item.price}</p>
           <p className="text-sm text-gray-500">Seller: {item.seller}</p>
         </div>
-      )) : <p>No items in wishlist</p>}
+      )) : <p className="text-center text-2xl font-medium mt-10">No items in wishlist</p>}
     </div>
   );
 }
+    

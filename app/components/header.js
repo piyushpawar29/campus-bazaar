@@ -70,7 +70,7 @@ const Header = () => {
                       </li>
                       <li>
                         <a
-                          href="/orders"
+                          href="/profile"
                           onClick={() => setShowDropdownMenu(false)}
                           className="block px-4 py-2 text-black hover:bg-gray-100"
                         >

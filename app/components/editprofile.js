@@ -3,15 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const EditProfile = () => {
-  const [userInfo, setUserInfo] = useState({
-    name: 'piyush',
-    email: 'piyush@piyush',
-    phone: '1234567890',
-    address: '123 Main St',
-    city: 'City',
-    state: 'State',
-    pincode: '12345',
-  });
+  const [userInfo, setUserInfo] = useState();
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -48,7 +40,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="profile-container m-5 p-3 mt-6 bg-gray-100 border border-gray-300 rounded">
+    <div className="profile-container m-5 p-3 mt-0 mb-0 bg-gray-100 border border-gray-300 rounded">
       {!isEditing ? (
         <div className="p-5 pt-2  text-lg">
           <h2 className="text-2xl font-bold mb-2">EDIT PROFILE</h2>

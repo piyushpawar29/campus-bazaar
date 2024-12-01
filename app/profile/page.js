@@ -11,7 +11,6 @@ import { MdEdit } from "react-icons/md";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { FaLock } from "react-icons/fa";
 import { PiSignOutBold } from "react-icons/pi";
-
 function UserSidebar({ setActiveComponent }) {
   return (
     <aside className="w-full bg-gray-800 dark:bg-gray-800 p-7 min-h-screen mb-0">
@@ -21,33 +20,40 @@ function UserSidebar({ setActiveComponent }) {
         <div className="m-4 text-black grid gap-2 grid-cols-1">
           <button
             onClick={() => setActiveComponent("productList")}
-            className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded"
+            className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border
+             border-gray-300 dark:border-gray-600 rounded"
           >
-            <BsBoxSeamFill className="inline-block justify-center" /> My Orders
+            <BsBoxSeamFill className="mr-2 inline-block justify-center" />My Orders
           </button>
+          <button 
+            onClick={() => setActiveComponent("productList")}
+            className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border
+             border-gray-300 dark:border-gray-600 rounded">
+              <BsBoxSeamFill className="mr-2 inline-block justify-center" />My Listings
+            </button>
           <button
             onClick={() => setActiveComponent("wishlist")}
             className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded"
           >
-            <IoIosHeart className="inline-block justify-center" /> Favorites
+            <IoIosHeart className="mr-2 inline-block justify-center" />Favorites
           </button>
           <button
             onClick={() => setActiveComponent("editProfile")}
             className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded"
           >
-            <MdEdit className="inline-block justify-center" /> Edit Profile
+            <MdEdit className="mr-2 inline-block justify-center" />Edit Profile
           </button>
           <button
             onClick={() => setActiveComponent("changePassword")}
-            className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded"
+            className="px-0.5 py-3.5 bg-white items-center hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded"
           >
-            <FaLock className="inline-block justify-center" /> Change Password
+            <FaLock className="mr-2 inline-block justify-center" />Change Password
           </button>
           <Link
             href="/signout"
-            className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded"
+            className="p-3 bg-white flex items-center justify-center hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded"
           >
-            <PiSignOutBold className="inline-block justify-center" /> Sign Out
+            <PiSignOutBold className="mr-2 inline-block justify-center" />Sign Out
           </Link>
         </div>
       </div>

@@ -1,8 +1,8 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
-import React from "react";
-import {IoIosImage} from "react-icons/io";
+import React, { useState, useEffect } from "react";
+import { IoIosImage } from "react-icons/io";
+
 export default function SellPage() {
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
@@ -10,16 +10,26 @@ export default function SellPage() {
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [additionalDetails, setAdditionalDetails] = useState("");
-  const [image, setImage] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [images, setImages] = useState(Array(6).fill(null));
+  const [isEditing, setIsEditing] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
-  
-  const userInfo = {
-    id: 1,
-    name: "Test User",
-    email: "testuser@example.com",
-    phoneNumber: "1234567890",
+  // Fetch user information
+  const fetchUserInfo = async () => {
+    try {
+      const response = await axios.get("/api/userinfo");
+      setUserInfo(response.data);
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
   };
 
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -29,22 +39,23 @@ export default function SellPage() {
     formData.append("description", description);
     formData.append("location", location);
     formData.append("additionalDetails", additionalDetails);
-    if (image) {
-      formData.append("image", image);
-    }
+    formData.append("quantity", quantity);
+    images.forEach((image, index) => {
+      if (image) formData.append(`image_${index}`, image);
+    });
+
     try {
       const response = await axios.post("/api/sell", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
       });
       alert(response.data.message);
+      window.location.href = "/profile";
     } catch (error) {
-      console.error(error);
+      console.error("Error submitting form:", error);
     }
   };
-  const [images, setImages] = useState(Array(6).fill(null)); // State to store images
 
+  // Handle image upload
   const handleImageChange = (e, index) => {
     const file = e.target.files[0];
     if (file) {
@@ -58,123 +69,249 @@ export default function SellPage() {
     }
   };
 
+  // Handle image removal
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...images];
+    updatedImages[index] = null;
+    setImages(updatedImages);
+  };
+
+  // Save edited user info
+  const handleSave = () => {
+    if (userInfo) {
+      console.log("Saved user info:", userInfo); // Replace with API call if needed
+    }
+  };
+
   return (
     <>
-    <div className="flex bg-amber-100"><button className="bg-white hover:bg-gray-300 font-bold py-2 px-4 m-3 rounded float-left" onClick={() => window.history.back()}>
-      Go Back</button></div>
-        <div className="flex justify-center items-center flex-col bg-amber-100">
-            <h1 className="flex justify-center items-center m-5 mt-0 text-3xl font-bold">POST YOUR ITEM</h1>
-            
-            <form onSubmit={handleSubmit} className="flex flex-col bg-white p-10 rounded-lg border border-black m-5 w-3/4">
-            <h2 className="text-2xl font-bold mt-4 mb-3">CATEGORY:</h2>
-            <label className="text-lg flex flex-col font-semibold">
-                
-                <select value={category} onChange={(e) => setCategory(e.target.value)} className="border border-black p-2 rounded font-normal">
-                <option value="">Select Category</option>
-                <option value="Textbooks and Study Material">Textbooks and Study Material </option>
-                <option value="Electronics and Gadgets">Electronics and Gadgets</option>
-                <option value="Furniture and Room Essentials">Furniture and Room Essentials </option>
-                <option value="Clothing and Accessories">Clothing and Accessories </option>
-                <option value="Sports Equipment">Sports Equipment </option>
-                <option value="Stationery and Office Supplies">Stationery and Office Supplies </option>
-                <option value="Tickets and Subscriptions">Tickets and Subscriptions </option>
-                <option value="Miscellaneous">Miscellaneous</option>
-                </select>
-                
-            </label>
-            <br /><hr></hr><br/>
+      <div className="flex bg-amber-100">
+        <button
+          className="bg-white hover:bg-gray-300 font-bold py-2 px-4 m-3 rounded"
+          onClick={() => window.history.back()}
+        >
+          Go Back
+        </button>
+      </div>
+      <div className="flex justify-center items-center flex-col bg-amber-100">
+        <h1 className="m-5 mt-0 text-3xl font-bold">POST YOUR ITEM</h1>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col bg-white p-10 rounded-lg border border-black m-5 w-3/4"
+        >
+          <section>
+            <h2 className="text-2xl font-bold mb-3">CATEGORY:</h2>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="border border-black p-3 rounded font-normal w-2/3"
+            >
+              <option value="">Select Category</option>
+              <option value="Textbooks and Study Material">
+                Textbooks and Study Material
+              </option>
+              <option value="Electronics and Gadgets">Electronics and Gadgets</option>
+              <option value="Furniture and Room Essentials">
+                Furniture and Room Essentials
+              </option>
+              <option value="Clothing and Accessories">
+                Clothing and Accessories
+              </option>
+              <option value="Sports Equipment">Sports Equipment</option>
+              <option value="Stationery and Office Supplies">
+                Stationery and Office Supplies
+              </option>
+              <option value="Tickets and Subscriptions">
+                Tickets and Subscriptions
+              </option>
+              <option value="Miscellaneous">Miscellaneous</option>
+            </select>
+          </section>
+
+          <hr className="my-4" />
+          <section className="flex flex-col">
             <h2 className="text-2xl font-bold">INCLUDE SOME DETAILS</h2>
-            <label className="text-lg flex flex-col mt-3">
-                Title:
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-                className=" p-2 border border-black rounded w-2/3 text-black" />
+            <label className="mt-3">
+              Title:<br/>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="p-2 border border-black rounded w-2/3"
+              />
             </label>
-            <br />
-            <label className="text-lg flex flex-col">
-                Description:
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} 
-                className=" p-2 border border-black rounded w-2/3 text-black"/>
+            <label className="mt-3">
+              Description:<br/>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="p-2 border border-black rounded w-2/3"
+              />
             </label>
-            <br /><hr></hr><br/>
+          </section>
+
+          <hr className="my-4" />
+
+          <section>
             <h2 className="text-2xl font-bold">SET A PRICE</h2>
-            <label className="text-lg flex flex-col">
-                Price:
-                ₹<input type="text" value={price} onChange={(e) => setPrice(e.target.value)} 
-                className=" p-2 border border-black rounded w-2/3 text-black"/>
+            <label className="mt-3">
+              Price:<br/> ₹
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="p-2 border border-black rounded w-2/3"
+              />
             </label>
-            <br /><hr></hr><br/>
+          </section>
+
+          <hr className="my-4" />
+
+          <section>
+            <h2 className="text-2xl font-bold">SET A QUANTITY</h2>
+            <label className="mt-3">
+              Quantity:<br/>
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                className="p-2 border border-black rounded w-2/3"
+              />
+            </label>
+          </section>
+
+          <hr className="my-4" />
+
+          <section>
             <h2 className="text-2xl font-bold">SET A LOCATION</h2>
-            <label className="text-lg flex flex-col">
-                Location:
-                <input type="text" value={location} onChange={(e) => setLocation(e.target.value)}
-                className=" p-2 border border-black rounded w-2/3 text-black" />
+            <label className="mt-3">
+              Location:<br/>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="p-2 border border-black rounded w-2/3"
+              />
             </label>
-            <br /><hr></hr><br/>
-            <label className="text-lg flex flex-col">
-                Additional Details:
-                <textarea
-                value={additionalDetails}
-                onChange={(e) => setAdditionalDetails(e.target.value)}
-                className=" p-2 border border-black rounded w-2/3 text-black"
-                />
-            </label>
-            <br /><hr></hr><br/>
-          
+          </section>
 
+          <hr className="my-4" />
 
-            <div>
-              <h2 className="text-2xl font-bold">UPLOAD AN IMAGE</h2>
-              <label className="text-lg flex flex-col">
-                Image:
-                <div className="border border-black p-4 rounded-md flex justify-center items-center w-full sm:w-2/3">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-                    {images.map((image, index) => (
-                      <div
-                        key={index}
-                        className="border-2 border-dotted border-gray-300 rounded-md p-2 flex flex-col items-center justify-center"
-                      >
-                        {image ? (
-                          <img
-                            src={image}
-                            alt={`Preview ${index + 1}`}
-                            className="w-40 h-40 object-cover rounded-md"
-                          />
-                        ) : (
-                          <IoIosImage
-                            size="90"
-                            className="text-gray-500 cursor-pointer"
-                            onClick={() =>
-                              document.getElementById(`file-input-${index}`).click()
-                            }
-                          />
-                        )}
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageChange(e, index)}
-                          className="hidden"
-                          id={`file-input-${index}`}
-                        />
-                      </div>
-                    ))}
-                  </div>
+          <section>
+            <h2 className="text-2xl font-bold">UPLOAD IMAGES</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 border-dotted border border-gray-300 w-full sm:w-2/3 h-full items-center p-4 rounded-md">
+              {images.map((image, index) => (
+                <div key={index} className="flex flex-col items-center rounded-md p-2 border-2 border-dotted border-gray-300">
+                  {image ? (
+                    <img
+                      src={image}
+                      alt={`Preview ${index + 1}`}
+                      className="w-40 h-40 object-cover"
+                    />
+                  ) : (
+                    <IoIosImage
+                      size="60"
+                      className="text-gray-500"
+                      onClick={() =>
+                        document.getElementById(`file-input-${index}`).click()
+                      }
+                    />
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, index)}
+                    className="hidden"
+                    id={`file-input-${index}`}
+                  />
+                  {image && (
+                    <button
+                      type="button"
+                      className="mt-2 text-red-500"
+                      onClick={() => handleRemoveImage(index)}
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
-              </label>
+              ))}
             </div>
-            <br /><hr></hr><br/>
-            <h2 className="text-2xl font-bold">CONFIRM YOUR INFO</h2>
-            <p className="text-lg">Please confirm that the following information is correct:</p>
-            <ul className="text-lg list-inside">
-                <li>Name: {userInfo.name}</li>
-                <li>Email: {userInfo.email}</li>
-                <li>Phone Number: {userInfo.phoneNumber}</li>
-            </ul>
-            <br /><hr></hr><br/>
-            
-            <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded text-center w-1/4" type="submit">POST</button>
-            </form>
-        </div>
+          </section>
 
-    </>
+          <hr className="my-4" />
+
+          <section>
+            <h2 className="text-2xl font-bold">CONFIRM YOUR INFO</h2>
+            {!isEditing ? (
+              <>
+                <div className="mt-3">
+                  Please confirm your information:
+                  <ul className="list-inside">
+                    <li>Name: {userInfo?.name}</li>
+                    <li>Email: {userInfo?.email}</li>
+                    <li>Phone: {userInfo?.phoneNumber}</li>
+                  </ul>
+                </div>  
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(true)}
+                  className="mt-3 bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-700 transition duration-300 ease-in-out hover:scale-105"
+                >
+                  Edit Info
+                </button>
+              </>
+            ) : (
+              <section>
+                <label>Name
+                <input
+                  type="text"
+                  value={userInfo?.name || ""}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, name: e.target.value })
+                  }
+                  className="p-2 border border-black rounded w-2/3 mt-2"
+                />
+              </label><br/>
+              <label className="mt-3">
+                Email:
+                <input
+                  type="email"
+                  value={userInfo?.email || ""}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, email: e.target.value })
+                  }
+                  className="p-2 border border-black rounded w-2/3 mt-2"
+                />
+              </label><br/>
+              <label className="mt-3">
+                Phone:
+                <input
+                  type="text"
+                  value={userInfo?.phoneNumber || ""}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, phoneNumber: e.target.value })
+                  }
+                  className="p-2 border border-black rounded w-2/3 mt-2"
+                />
+              </label><br/>
+              <button
+                type="button"
+                onClick={handleSave}
+                className="mt-3 bg-green-600 px-4 py-2 rounded text-white"
+              >
+                Save Info
+              </button>
+            </section>
+          )}
+        </section>
+        <button
+          type="submit"
+          className="mt-5 bg-green-600 w-2/3 px-6 py-3 rounded-lg text-white font-bold hover:bg-green-700 transition duration-300 ease-in-out hover:scale-105"
+        >
+          POST
+        </button>
+      </form>
+    </div>
+  </>
   );
 }

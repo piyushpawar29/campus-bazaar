@@ -12,7 +12,7 @@ export default function MyOrders() {
 
   useEffect(() => {
     axios
-      .get("/api/orders") // Replace with your API endpoint
+      .get("/api/orders")
       .then((response) => {
         setOrders(response.data);
         setLoading(false);

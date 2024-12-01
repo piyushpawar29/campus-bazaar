@@ -15,7 +15,7 @@ export default function UserSidebar() {
         <h2 className="text-2xl font-bold m-4 mb-2"> My Account</h2>
         <h2 className="text-2xl font-bold m-4 mt-2 py-2 pt-0"> Welcome,John Doe</h2>
         <div className="m-4 text-black grid gap-2 grid-cols-1">
-          <button onClick={() => setActiveComponent('product-list')} className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded">
+          <button className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded">
             <BsBoxSeamFill className="inline-block justify-center" /> My Orders
           </button>
           <button onClick={() => setActiveComponent('wishlist')} className="p-3 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 rounded">

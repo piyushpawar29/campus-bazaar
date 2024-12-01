@@ -2,26 +2,44 @@
 import React, { useState } from "react";
 import axios from 'axios';
 
-export default function Login() {
+export default function Login(
+  
+) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  if (password !== confirmPassword) {
+    setMessage('Passwords do not match');
+    return;
+  }
     try {
       const response = await axios.post('http://localhost:5000/api/login', {
         email,
         password
       });
+      setMessage('Loading...');
+      const loadingInterval = setInterval(() => {
+        setMessage((prev) => (prev === 'Loading...' ? 'Loading' : prev + '.'));
+      }, 500);
 
-      setMessage(response.data.message);
-      if (response.data.message === 'Login successful') {
-        setEmail('');
-        setPassword('');
-        window.location.href = '/test/Dashboard'; 
-      }
+      setTimeout(() => {
+        clearInterval(loadingInterval);
+        setMessage(response.data.message);
+        if (response.data.message === 'Login successful') {
+          setEmail('');
+          setPassword('');
+          window.location.href = '/profile'; 
+        }
+      }, 2000);
+      // setMessage(response.data.message);
+      // if (response.data.message === 'Login successful') {
+      //   setEmail('');
+      //   setPassword('');
+      //   window.location.href = '/profile'; 
+      // }
     } catch (error) {
       console.error(error);
       setMessage('Error logging in');
@@ -37,6 +55,8 @@ export default function Login() {
         <h3 className="text-2xl font-sans font-bold mb-5">Login to Your Account</h3>
         {message && <p className={`mb-4 ${message.includes('successful') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="relative">
+          <label className={`absolute top-0 left-0 text-gray-500 transition-all duration-500 ease-in-out ${email ? 'text-sm -translate-y-5' : 'hidden'}`} htmlFor="email">Email</label>
           <input 
             type="email" 
             name="email" 
@@ -46,6 +66,8 @@ export default function Login() {
             onChange={e => setEmail(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300  rounded-3xl focus:outline-none focus:border-teal-500"
           />
+          </div>
+
           <input 
             type="password" 
             name="password" 

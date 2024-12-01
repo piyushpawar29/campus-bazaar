@@ -37,7 +37,7 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="flex justify-center items-center flex-col h-screen bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300">
+    <div className="flex justify-center items-center flex-col h-screen bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300 m-0">
       <div className="h-[500px] w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center mt-0 mb-7">
         <h3 className="text-2xl font-sans font-bold mb-5">Change Password</h3>
         {message && <p className={`mb-4 ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
