@@ -5,10 +5,8 @@ import axios from "axios";
 export default function Forgot() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const response = await axios.post('/api/forgotpassword', { email });
       setMessage(response.data.message);
@@ -22,7 +20,7 @@ export default function Forgot() {
   };
 
   return (
-    <div className="flex justify-center items-center flex-col h-screen bg-amber-100">
+    <div className="flex justify-center items-center flex-col h-screen ">
       <img src="logo.svg" className=" h-[130px] flex justify-center items-center " />
       <img src="name.png" className="h-[50px] flex justify-center items-center mb-3" />
       <div className="h-[400px] w-full max-w-md bg-white rounded-2xl shadow-lg p-7 text-center mt-0 m-5 ">
@@ -40,17 +38,17 @@ export default function Forgot() {
           />
           <button 
             type="submit" 
-            className="w-full px-3 py-2 mt-4 bg-gradient-to-r from-amber-300 to-orange-600 hover:from-white bg-amber-500 hover:bg-white hover:text-amber-500 hover:border hover:border-amber-500 transition ease-in-out duration-200 hover:scale-105 hover:shadow-md hover:shadow-amber-500 text-white font-bold rounded-3xl"
+            className="w-full px-3 py-2 mt-4 bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-500 hover:scale-105 transition ease-in-out hover:shadow-md hover:shadow-cyan-300 text-white font-bold rounded-3xl"
           >
             Send Email
           </button>
           <div className="mt-6">
           <hr className="my-4" />
-          <a href="/signup" className="text-amber-500 hover:text-amber-700 mb-0">Don't have an account?  Sign up</a>
+          <a href="/signup" className="text-cyan-500 hover:text-cyan-700 mb-0">Don't have an account?  Sign up</a>
         </div>
           <div className="mt-6">
           <hr className="my-4" />
-          <a href="/" className="text-amber-500 hover:text-amber-700 mb-0">Back to Home</a>
+          <a href="/" className="text-cyan-500 hover:text-cyan-700 mb-0">Back to Home</a>
         </div>
         </form>
       </div>

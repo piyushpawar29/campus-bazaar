@@ -15,12 +15,30 @@ export default function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const demoProduct = {
+    id: 1,
+    name: "Demo Product",
+    price: 19.99,
+    description: "This is a demo product.",
+    category: "Demo Category",
+    images: [
+      "/product1.jpg",
+      "/calculator2.jpeg",
+      "/calculator4.webp",
+      "/calculator.jpg.avif"
+    ],
+    seller: "Demo Seller",
+  };
+
+  if (!product) {
+    setProduct(demoProduct);
+  }
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`/api/products/${id}`);
-        setProduct(response.data);
+        //const response = await axios.get(`/api/products/${id}`);
+        //setProduct(response.data);
       } catch (error) {
         setError("Failed to load product details.");
         console.error("Error fetching product:", error);
@@ -49,12 +67,12 @@ export default function ProductPage() {
 
   return (
     <Layout>
-      <nav className="flex gap-1 text-sm m-5 mb-2 font-sans">
+      <nav className="flex gap-1  text-sm m-5 mb-2 font-sans">
         <a href="/" className="hover:underline">
           Home
         </a>
         <span className="text-gray-400">&rsaquo;</span>
-        <a href="/shop" className="hover:underline">
+        <a href="/shop/all" className="hover:underline">
           Products
         </a>
         <span className="text-gray-400">&rsaquo;</span>

@@ -5,9 +5,21 @@ import Layout from "../../components/layout";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
+const CATEGORY_NAMES = {
+  all: "All Products",
+  textbooks: "Textbooks and Study Material",
+  electronics: "Electronics and Gadgets",
+  furniture: "Furniture and Room Essentials",
+  clothing: "Clothing and Accessories",
+  sports: "Sports Equipment",
+  stationery: "Stationery and Office Supplies",
+  tickets: "Tickets and Subscriptions",
+  miscellaneous: "Miscellaneous",
+};
+
 export default function ShopPage() {
   const router = useRouter();
-  const { category } = useParams(); // Get the category from the URL
+  const { category } = useParams() || { category: "all" }; // Get the category from the URL
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -33,7 +45,7 @@ export default function ShopPage() {
   const applyFilters = (products, category) => {
     if (!products.length) return;
     const filtered =
-      category === "all" || !category
+      category === "all"
         ? products
         : products.filter((product) => product.category === category);
     setFilteredProducts(filtered);
@@ -54,7 +66,24 @@ export default function ShopPage() {
     const selectedCategory = e.target.value;
     router.push(`/shop/${selectedCategory}`); // Redirect to the selected category route
   };
-
+  //Use a demo product if no products are available
+  // const demoProduct = {
+  //   id: 1,
+  //   name: "Demo Product",
+  //   price: 19.99,
+  //   description: "This is a demo product.",
+  //   category: "Demo Category",
+  //   images: [
+      
+  //     "/calculator2.jpeg",
+  //     "/calculator4.webp",
+  //     "/calculator.jpg.avif"
+  //   ],
+  //   seller: "Demo Seller",
+  // };
+  // if (!filteredProducts.length) {
+  //   setFilteredProducts([demoProduct]);
+  // }
   return (
     <Layout>
       <div className="p-6">
@@ -64,10 +93,13 @@ export default function ShopPage() {
             Home
           </Link>
           <span className="text-gray-400">&rsaquo;</span>
-          <span>Shop</span>
+          <Link href="/shop/all" className="hover:underline">
+            Shop
+          </Link>
           <span className="text-gray-400">&rsaquo;</span>
-          <span>{category}</span>
+          <span>{CATEGORY_NAMES[category] || "Category"}</span>
         </nav>
+
         <div className="flex justify-between mb-4">
           <div>
             <label htmlFor="sort">Sort by price: </label>
@@ -81,35 +113,36 @@ export default function ShopPage() {
             <label htmlFor="category">Filter by category: </label>
             <select
               id="category"
-              value={category || "all"} // Default to "all" if category is not provided
+              value={category}
               onChange={handleCategoryFilterChange}
             >
-              <option value="all">All</option>
-              <option value="textbooks">Textbooks and Study Material</option>
-              <option value="electronics">Electronics and Gadgets</option>
-              <option value="furniture">Furniture and Room Essentials</option>
-              <option value="clothing">Clothing and Accessories</option>
-              <option value="sports">Sports Equipment</option>
-              <option value="stationery">Stationery and Office Supplies</option>
-              <option value="tickets">Tickets and Subscriptions</option>
-              <option value="miscellaneous">Miscellaneous</option>
+              {Object.entries(CATEGORY_NAMES).map(([key, name]) => (
+                <option key={key} value={key}>
+                  {name}
+                </option>
+              ))}
             </select>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredProducts.map((product) => (
-            <div key={product.id} className="border p-4 rounded">
+            <div key={product.id} className="border p-4 border-gray-300 shadow-md shadow-gray-300 rounded-lg flex flex-col">
               <img
                 src={product.image}
                 className="w-full h-48 object-cover"
                 alt={product.name}
               />
               <h2 className="text-xl font-bold">{product.name}</h2>
-              <p className="text-gray-700">{product.description}</p>
+              {/* <p className="text-gray-700">{product.description}</p> */}
               <p className="text-lg font-semibold">${product.price}</p>
-              <p className="text-gray-500">{product.category}</p>
-              <p className="text-gray-500">{product.seller}</p>
+              <p className="text-gray-500">{CATEGORY_NAMES[product.category]}</p>
+              <p className="text-gray-500 flex justify-items-end">Seller: {product.seller}</p>
+              <button 
+              onClick={() => router.push(`/product/${product.id}`)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3">
+                View Product
+              </button>
             </div>
           ))}
         </div>

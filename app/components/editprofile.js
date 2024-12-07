@@ -5,7 +5,6 @@ import axios from "axios";
 const EditProfile = () => {
   const [userInfo, setUserInfo] = useState();
   const [isEditing, setIsEditing] = useState(false);
-
   useEffect(() => {
     // Fetch user info from API on component mount
     const fetchUserInfo = async () => {
@@ -16,7 +15,6 @@ const EditProfile = () => {
         console.error('Error fetching user info:', error);
       }
     };
-
     fetchUserInfo();
   }, []);
 
@@ -84,11 +82,11 @@ const EditProfile = () => {
               name="email"
               value={userInfo.email}
               onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md 
+              shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
           <div className="">
-            
             <label className="block text-gray-700">Phone:</label>
             <input
               type="tel"

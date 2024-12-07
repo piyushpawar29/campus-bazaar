@@ -11,7 +11,7 @@ export default function Layout({ children }) {
         <main className="flex-1">
           {children}
         </main>
-        <footer className="h-20 bg-gray-800">
+        <footer className=" bg-gray-800">
           <Footer />
         </footer>
       </div>

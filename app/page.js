@@ -11,15 +11,16 @@ function MyApp() {
   const router = useRouter();
 
   const categories = [
-    { name: "Textbooks and Study Material", icon: <IoIosBook size={40} /> },
-    { name: "Electronics and Gadgets", icon: <IoIosPhonePortrait size={40} /> },
-    { name: "Furniture and Room Essentials", icon: <IoIosHome size={40} /> },
-    { name: "Clothing and Accessories", icon: <IoIosShirt size={40} /> },
-    { name: "Sports Equipment", icon: <IoIosBasketball size={40} /> },
-    { name: "Stationery and Office Supplies", icon: <IoIosCreate size={40} /> },
-    { name: "Tickets and Subscriptions", icon: <IoMdPricetag size={40} /> },
-    { name: "Miscellaneous", icon: <IoIosApps size={40} /> },
+    { name: "Textbooks and Study Material",value:"textbooks" , icon: <IoIosBook size={40} /> },
+    { name: "Electronics and Gadgets",value:"electronics" , icon: <IoIosPhonePortrait size={40} /> },
+    { name: "Furniture and Room Essentials",value:"furniture" , icon: <IoIosHome size={40} /> },
+    { name: "Clothing and Accessories",value:"clothing" , icon: <IoIosShirt size={40} /> },
+    { name: "Sports Equipment",value:"sports" , icon: <IoIosBasketball size={40} /> },
+    { name: "Stationery and Office Supplies",value:"stationery" , icon: <IoIosCreate size={40} /> },
+    { name: "Tickets and Subscriptions",value:"tickets" ,icon: <IoMdPricetag size={40} /> },
+    { name: "Miscellaneous",value: "miscellaneous", icon: <IoIosApps size={40} /> },
   ];
+
   const [products, setProducts] = React.useState([]);
   React.useEffect(() => {
     axios.get('/api/products')
@@ -91,14 +92,14 @@ function MyApp() {
         </div>
 
         {/* Categories Section */}
-        <div className="flex flex-col bg-gradient-to-r from-amber-500 to-orange-600">
+        <div className="flex flex-col bg-gradient-to-r from-teal-200 via-teal-400 to-cyan-400">
           <h1 className="text-6xl font-bold text-center text-white py-10">BROWSE CATEGORIES</h1>
           <section className="grid grid-cols-4 gap-4 py-10 px-20">
             {categories.map((category, index) => (
               <div
                 key={index}
                 className="bg-white shadow-md hover:scale-105 border-amber-500 transition ease-in-out duration-200 hover:shadow-lg p-4 text-center flex flex-col items-center justify-center rounded-md"
-                onClick={() => router.push(`/shop?category=${category.name}`)}
+                onClick={() => router.push(`/shop/${category.value}`)}
               >
                 <div className="mb-2">{category.icon}</div>
                 <h3 className="text-lg font-bold">{category.name}</h3>

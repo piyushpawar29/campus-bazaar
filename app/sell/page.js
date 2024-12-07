@@ -2,13 +2,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { IoIosImage } from "react-icons/io";
-
 export default function SellPage() {
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
   const [additionalDetails, setAdditionalDetails] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [images, setImages] = useState(Array(6).fill(null));
@@ -85,7 +83,7 @@ export default function SellPage() {
 
   return (
     <>
-      <div className="flex bg-amber-100">
+      <div className="flex bg-cyan-100">
         <button
           className="bg-white hover:bg-gray-300 font-bold py-2 px-4 m-3 rounded"
           onClick={() => window.history.back()}
@@ -93,7 +91,7 @@ export default function SellPage() {
           Go Back
         </button>
       </div>
-      <div className="flex justify-center items-center flex-col bg-amber-100">
+      <div className="flex justify-center items-center flex-col bg-cyan-100">
         <h1 className="m-5 mt-0 text-3xl font-bold">POST YOUR ITEM</h1>
         <form
           onSubmit={handleSubmit}
@@ -183,21 +181,6 @@ export default function SellPage() {
           <hr className="my-4" />
 
           <section>
-            <h2 className="text-2xl font-bold">SET A LOCATION</h2>
-            <label className="mt-3">
-              Location:<br/>
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="p-2 border border-black rounded w-2/3"
-              />
-            </label>
-          </section>
-
-          <hr className="my-4" />
-
-          <section>
             <h2 className="text-2xl font-bold">UPLOAD IMAGES</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 border-dotted border border-gray-300 w-full sm:w-2/3 h-full items-center p-4 rounded-md">
               {images.map((image, index) => (
@@ -272,6 +255,7 @@ export default function SellPage() {
                   className="p-2 border border-black rounded w-2/3 mt-2"
                 />
               </label><br/>
+
               <label className="mt-3">
                 Email:
                 <input

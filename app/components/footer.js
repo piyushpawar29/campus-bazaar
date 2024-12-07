@@ -1,9 +1,46 @@
 import React from "react";
 export default function Footer() {
   return (
-    <footer className="flex items-center justify-center w-full h-30 border-t">
+    <footer className="flex items-center justify-center w-full border-t">
       <div className="flex items-center justify-center flex-col mt-3">
-        
+       {/*<div className="flex flex-col items-center justify-start space-x-2 ml-3">
+        <p className="text-sm text-gray-500">
+          Hosted on{" "}
+          <a
+            href="https://vercel.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-600"
+          >
+            Vercel
+          </a>
+        </p>
+
+        <p className="text-sm text-gray-500">
+          Powered by{" "}
+          <a
+            href="https://nextjs.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-600"
+          >
+            Next.js
+          </a>
+        </p>
+
+        <p className="text-sm text-gray-500">
+          Built with{" "}
+          <a
+            href="https://tailwindcss.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-600"
+          >
+            TailwindCSS
+          </a>
+        </p>
+        </div> */}
+
           <a
             href="https://github.com/piyushpawar29/campus-bazaar.git"
             target="_blank"

@@ -29,7 +29,7 @@ export default function Wishlist() {
   //     id: 1,
   //     name: "Wishlist Product 1",
   //     images: [
-  //       "/wishlist1.jpg",
+  //       "/calculator.webp",
   //       "/wishlist2.jpg",
   //     ],
   //     price: 49.99,
